@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Reduced gap between form elements */
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        input[type="file"] {
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        input[type="file"]:hover {
+            border-color: #4CAF50;
+        }
+
+        /* Align the upload button to the left and make it smaller */
+        button {
+            padding: 6px 15px; /* Smaller button */
+            font-size: 0.9rem;  /* Smaller font size */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            float: left;  /* Align button to the left */
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Align the next section of the form */
+        .form-section {
+            clear: both; /* Clear the float */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        table th, table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table td {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .result-container {
+            margin-top: 30px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #f4f7fc;
+        }
+    </style>
+</head>
+<body>
+    <h2>Resume Filter</h2>
+
+    <div class="container">
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="job_description">Job Description:</label>
+                <input type="file" name="job_description" required>
+            </div>
+
+            <div class="form-section">
+                <label for="resumes">Resumes:</label>
+                <input type="file" name="resumes" multiple required>
+            </div>
+
+            <button type="submit">Upload</button>
+        </form>
+
+        {% if ranked_resumes %}
+            <div class="result-container">
+                <h3>Ranked Resumes</h3>
+                <table>
+                    <tr>
+                        <th>Resume Name</th>
+                        <th>Overall Score</th>
+                    </tr>
+                    {% for resume in ranked_resumes %}
+                        <tr>
+                            <td>{{ resume['resume_name'] }}</td>
+                            <td>{{ resume['overall_score'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p>Resume Filter &copy; 2025 | All rights reserved.</p>
+    </div>
+
+</body>
+</html>
